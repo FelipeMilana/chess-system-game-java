@@ -30,6 +30,6 @@ public class ChessMatch {
 	private void initialSetup() {   //inicia a partida e coloca as peças no tabuleiro
 		board.placePiece(new Rook(board, Color.WHITE), new Position(2, 1));  //instancia uma peça, com o tabuleiro e cor, e sua posição
 		board.placePiece(new King(board, Color.BLACK), new Position(0, 4));
-		board.placePiece(new King(board, Color.WHITE), new Position(7,  4));
+		board.placePiece(new King(board, Color.WHITE), new Position(7, 4));		
 	}
 }
