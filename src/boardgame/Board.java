@@ -40,4 +40,9 @@ public class Board {
 	public Piece piece(Position position) {   //retorna uma peça do tipo Piece informando a posicao
 		return pieces[position.getRow()][position.getColumn()];
 	}
+	
+	public void placePiece(Piece piece, Position position) {
+		pieces[position.getRow()][position.getColumn()] = piece;  //adiciona a peça 
+		piece.position = position; //adiciona a posição da peça
+	}
 }

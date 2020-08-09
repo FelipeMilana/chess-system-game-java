@@ -1,6 +1,9 @@
 package chess;
 
 import boardgame.Board;
+import boardgame.Position;
+import chess.pieces.King;
+import chess.pieces.Rook;
 
 public class ChessMatch {
 
@@ -10,6 +13,7 @@ public class ChessMatch {
 	//constructors
 	public ChessMatch() { //construtor padrao, tudo nulo
 		board = new Board(8, 8);     //   intancia o objeto board e cria um tabuleiro 8 x 8 nulo, e cria peças do tipo piece
+		initialSetup();
 	}
 	
 	//methods
@@ -23,4 +27,9 @@ public class ChessMatch {
 		return mat;
 	}
 	
+	private void initialSetup() {   //inicia a partida e coloca as peças no tabuleiro
+		board.placePiece(new Rook(board, Color.WHITE), new Position(2, 1));  //instancia uma peça, com o tabuleiro e cor, e sua posição
+		board.placePiece(new King(board, Color.BLACK), new Position(0, 4));
+		board.placePiece(new King(board, Color.WHITE), new Position(7,  4));
+	}
 }
