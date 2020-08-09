@@ -7,10 +7,7 @@ public class Position {
 	private int column;
 	
 	//constructors
-	public Position() {
-	}
-	
-	public Position(int row, int column) {
+	public Position(int row, int column) {   //cria uma posição com coluna e linha
 		this.row = row;
 		this.column = column;
 	}
@@ -33,7 +30,7 @@ public class Position {
 	}
 	
 	@Override
-	public String toString() {
+	public String toString() {  //apenas imprime
 		return row+", "+column;
 	}
 }
