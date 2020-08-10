@@ -50,6 +50,19 @@ public class Board {
 		piece.position = position; //adiciona a posição da peça
 	}
 	
+	public Piece removePiece(Position position) {
+		if(!positionExists(position)) {
+			throw new BoardException("Position not on board");
+		}
+		if(piece(position) == null) {   //se ja tiver nulo, so retorna nulo
+			return null;
+		}
+		Piece aux = piece(position);   //aux recebe a peça naquela posição
+		aux.position = null;      //a posição dessa peça é nula
+		pieces[position.getRow()][position.getColumn()] = null;  //a posição na matriz fica nula
+		return aux;  //retorna a peça
+	}
+	
 	private boolean positionExists(int row, int column) {   //retorna verdadeiro se a linha e coluna existir no tabuleiro
 		return row >= 0 && row < rows && column >=0 && column < columns;
 	}
@@ -64,4 +77,5 @@ public class Board {
 		}
 		return piece(position) != null;
 	}
+	
 }
