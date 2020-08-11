@@ -16,7 +16,7 @@ public class Board {
 		}
 		this.rows = rows;
 		this.columns = columns;
-		pieces = new Piece[rows][columns];  //instanciamos o objeto, que tera o numero de linhas e colunas falados, e sera cheia de nulos, nao é o construtor da classe piece
+		pieces = new Piece[rows][columns];  //instanciamos uma matriz nula, que tera o numero de linhas e colunas falados, nao é o construtor da classe piece
 	}
 
 	//methods
@@ -28,43 +28,39 @@ public class Board {
 		return columns;
 	}
 	
-	public Piece piece(int row, int column) {     //retorna uma peça do tipo Piece informando uma linha e coluna
-		if(!positionExists(row, column)) {
+	public Piece piece(int row, int column) {     //retorna uma peça do tipo Piece informando uma linha e coluna da matriz
+		if(!positionExists(row, column)) {   //vericação se a posição na matriz existe
 			throw new BoardException("Position not on the board");
 		}
 		return pieces[row][column];
 	}
 	
-	public Piece piece(Position position) {   //retorna uma peça do tipo Piece informando a posicao
-		if(!positionExists(position)) {
+	public Piece piece(Position position) {   //retorna uma peça do tipo Piece informando a posicao da matriz
+		if(!positionExists(position)) {   //verificação se a posição na matriz existe
 			throw new BoardException("Position not on the board");
 		}
 		return pieces[position.getRow()][position.getColumn()];
 	}
 	
-	public void placePiece(Piece piece, Position position) {   //adicionar peça
-		if(thereIsAPiece(position)) {
+	public void placePiece(Piece piece, Position position) {   //adicionar peça no tabuleiro, dando a peça e a posição na matriz
+		if(thereIsAPiece(position)) {  //verifica se em peça adicionada naquela posição ja 
 			throw new BoardException("There is already a piece on position " + position);
 		}
-		pieces[position.getRow()][position.getColumn()] = piece;  //adiciona a peça
-		piece.position = position; //adiciona a posição da peça
+		pieces[position.getRow()][position.getColumn()] = piece;  //coloca a peça na posição da matriz
+		piece.position = position; //a posição daquela peça deixa de ser nula
 	}
 	
-	public Piece removePiece(Position position) {
-		if(!positionExists(position)) {
+	public Piece removePiece(Position position) {   //remove uma peça do tabuleiro dando a posição na matriz
+		if(!positionExists(position)) {  //verifica se existe aquela posição
 			throw new BoardException("Position not on board");
 		}
-		if(piece(position) == null) {   //se ja tiver nulo, so retorna nulo
+		if(piece(position) == null) {   //se na matriz naquela posição tiver nulo , so retorna nulo  
 			return null;
 		}
-		Piece aux = piece(position);   //aux recebe a peça naquela posição
-		aux.position = null;      //a posição dessa peça é nula
-		pieces[position.getRow()][position.getColumn()] = null;  //a posição na matriz fica nula
+		Piece aux = piece(position);   // senao, aux recebe a peça naquela posição
+		aux.position = null;      //a posição dessa peça se torna nula
+		pieces[position.getRow()][position.getColumn()] = null;  //a posição na matriz fica nula tbm 
 		return aux;  //retorna a peça
-	}
-	
-	private boolean positionExists(int row, int column) {   //retorna verdadeiro se a linha e coluna existir no tabuleiro
-		return row >= 0 && row < rows && column >=0 && column < columns;
 	}
 	
 	public boolean positionExists(Position position) {  //retorna verdadeiro se a posição existir no tabuleiro
@@ -78,4 +74,7 @@ public class Board {
 		return piece(position) != null;
 	}
 	
+	private boolean positionExists(int row, int column) {   //retorna verdadeiro se a linha e coluna existir no tabuleiro
+		return row >= 0 && row < rows && column >=0 && column < columns;
+	}
 }

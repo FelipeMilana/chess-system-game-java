@@ -29,7 +29,14 @@ public class UI {
 	public static final String ANSI_PURPLE_BACKGROUND = "\u001B[45m";
 	public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
 	public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
+	
+	//limpa a tela do terminal
+	public static void clearScreen() {      // https://stackoverflow.com/questions/2979383/java-clear-the-console
+		System.out.print("\033[H\033[2J");
+		System.out.flush();
+	}	
 		
+	//leitura da peça inserida pela usuario
 	public static ChessPosition readChessPosition(Scanner sc) {   //le a poisção com o scanner
 		try {
 			String s = sc.nextLine();
@@ -41,16 +48,17 @@ public class UI {
 			throw new InputMismatchException("Error reading ChessPosition. Valid values are from a1 to h8");
 		}
 	}
-		
+	
+	//impressao do tabuleiro
 	public static void printBoard(ChessPiece[][] pieces) {   //metodo para imprimir a matriz de peça
 		for(int i = 0; i < pieces.length; i++) {  //percorre a linha da matriz
-			System.out.print((8 - i) + " ");
+			System.out.print(ANSI_RED +(8 - i) + " " + ANSI_RESET);  //COR DOS NUMEROS
 			for(int j = 0; j < pieces[i].length; j++) { //percorre as colunas de cada linha da matriz
 				printPiece(pieces[i][j]); //imprime uma peça
 			}
 			System.out.println();
 		}
-		System.out.println("  a b c d e f g h");
+		System.out.println(ANSI_RED + "  a b c d e f g h"+ ANSI_RESET);  //cor das letras	
 	}
 	
 	
@@ -59,10 +67,10 @@ public class UI {
             System.out.print("-" + ANSI_RESET);
         }
         else if (piece.getColor() == Color.WHITE) {
-            System.out.print(ANSI_WHITE + piece + ANSI_RESET);
+            System.out.print(ANSI_WHITE + piece.toString() + ANSI_RESET);
         }
         else {
-        	System.out.print(ANSI_YELLOW + piece + ANSI_RESET);
+        	System.out.print(ANSI_YELLOW + piece.toString() + ANSI_RESET);
         }
         System.out.print(" ");
 	}

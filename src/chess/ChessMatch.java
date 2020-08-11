@@ -12,8 +12,8 @@ public class ChessMatch {
 	private Board board;
 	
 	//constructors
-	public ChessMatch() { //construtor padrao, tudo nulo
-		board = new Board(8, 8);     //   intancia o objeto board e cria um tabuleiro 8 x 8 nulo, e cria peças do tipo piece
+	public ChessMatch() { //construtor padrao, sem parametros
+		board = new Board(8, 8);     //intancia o objeto board e cria um tabuleiro 8 x 8, e cria peças do tipo piece
 		initialSetup();
 	}
 	
