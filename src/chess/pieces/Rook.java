@@ -16,4 +16,10 @@ public class Rook extends ChessPiece{
 	public String toString() {
 		return "R";
 	}
+	
+	@Override
+	public boolean[][] possibleMoves() {
+		boolean[][] mat = new boolean[getBoard().getRows()][getBoard().getColumns()];  //criou-se uma matriz de booleanos da mesma dimensao do tabuliro, cheia de falso inicialmente
+		return mat;  
+	}
 }
