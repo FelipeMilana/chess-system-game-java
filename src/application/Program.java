@@ -28,7 +28,6 @@ public class Program {
 				ChessPosition target = UI.readChessPosition(sc);
 				
 				ChessPiece capturedPiece = chessMatch.performChessMove(source, target);
-				System.out.println(capturedPiece);
 			}
 			catch(ChessException e) {    //para o programa não terminar, tratando as exceções, ira tratar boardException, mas n tem mensagem
 				System.out.println(e.getMessage());

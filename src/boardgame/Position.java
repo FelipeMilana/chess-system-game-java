@@ -29,6 +29,10 @@ public class Position {
 		this.column = column;
 	}
 	
+	public void setValues(int row, int column) {  //metodo para atualizar os valores de linha e coluna
+		this.row = row;
+		this.column = column;
+	}
 	@Override
 	public String toString() {  //apenas imprime
 		return row+", "+column;

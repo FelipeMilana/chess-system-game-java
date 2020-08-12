@@ -1,7 +1,9 @@
 package chess;
 
 import boardgame.Board;
+
 import boardgame.Piece;
+import boardgame.Position;
 
 public abstract class ChessPiece extends Piece {  //ainda é generica, entao é tambem abstrata
 
@@ -17,5 +19,10 @@ public abstract class ChessPiece extends Piece {  //ainda é generica, entao é ta
 	//methods
 	public Color getColor() {   //apenas mostrara a cor, e nao altera-la
 		return color;
+	}
+	
+	protected boolean isThereOpponentPiece(Position position) {
+		ChessPiece p = (ChessPiece) getBoard().piece(position);   //retorna a peça que esta naquela posição, faz o dowcasting de piece para ChessPiece
+		return p != null && p.getColor() != color;  //retorn verdadeiro se a peça p for diferente de nulo, e se  cor da peça for diferente da minha peça
 	}
 }
