@@ -54,7 +54,19 @@ public class UI {
 		for(int i = 0; i < pieces.length; i++) {  //percorre a linha da matriz
 			System.out.print(ANSI_RED +(8 - i) + " " + ANSI_RESET);  //COR DOS NUMEROS
 			for(int j = 0; j < pieces[i].length; j++) { //percorre as colunas de cada linha da matriz
-				printPiece(pieces[i][j]); //imprime uma peça
+				printPiece(pieces[i][j], false); //imprime uma peça sem cor de fundo
+			}
+			System.out.println();
+		}
+		System.out.println(ANSI_RED + "  a b c d e f g h"+ ANSI_RESET);  //cor das letras	
+	}
+	
+	//impressao do tabuleiro com coloração para movimentos possiveis
+	public static void printBoard(ChessPiece[][] pieces, boolean[][] possibleMoves) {
+		for(int i = 0; i < pieces.length; i++) {  //percorre a linha da matriz
+			System.out.print(ANSI_RED +(8 - i) + " " + ANSI_RESET);  //COR DOS NUMEROS
+			for(int j = 0; j < pieces[i].length; j++) { //percorre as colunas de cada linha da matriz
+				printPiece(pieces[i][j], possibleMoves[i][j]); //imprime uma peça e aonde for true, colore o fundo indicando um movimento possivel
 			}
 			System.out.println();
 		}
@@ -62,7 +74,10 @@ public class UI {
 	}
 	
 	
-	public static void printPiece(ChessPiece piece) {
+	private static void printPiece(ChessPiece piece, boolean background) {  //variavel para ver se precisa colorir ou nao o fundo da peça
+		if(background) {
+			System.out.print(ANSI_BLUE_BACKGROUND);
+		}
 		if (piece == null) {
             System.out.print("-" + ANSI_RESET);
         }

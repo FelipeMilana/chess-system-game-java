@@ -23,6 +23,10 @@ public class Program {
 				System.out.print("Source ");
 				ChessPosition source = UI.readChessPosition(sc);
 				
+				boolean[][] possibleMoves = chessMatch.possibleMoves(source);  //aloca a matriz contendo os movimentos possiveis daquela posição na matriz possibleMoves
+				UI.clearScreen();
+				UI.printBoard(chessMatch.getPieces(), possibleMoves);  //sobrecarga de metodo, e dessa vez servira para mostrar os movimentos possiveis daquela peça na posição escolhida
+				
 				System.out.println();
 				System.out.print("Target: ");
 				ChessPosition target = UI.readChessPosition(sc);
