@@ -1,6 +1,7 @@
 package chess;
 
 import boardgame.Board;
+
 import boardgame.Piece;
 import boardgame.Position;
 import chess.pieces.King;
@@ -8,16 +9,30 @@ import chess.pieces.Rook;
 
 public class ChessMatch {
 
+	//attributes
+	private int turn;
+	
 	//association
 	private Board board;
+	private Color currentPlayer;  //ja esta no pacote
 	
 	//constructors
 	public ChessMatch() { //construtor padrao, sem parametros
 		board = new Board(8, 8);     //intancia o objeto board e cria um tabuleiro 8 x 8, e cria peças do tipo piece
+		turn = 1;
+		currentPlayer = Color.WHITE;
 		initialSetup();
 	}
 	
 	//methods
+	public int getTurn() {
+		return turn;
+	}
+	
+	public Color getCurrentPlayer() {
+		return currentPlayer;
+	}
+	
 	public ChessPiece[][] getPieces() {  //o que interessa é a peça do tipo de xadrez, nao uma peça qualquer
 		ChessPiece[][] mat = new ChessPiece[board.getRows()][board.getColumns()];  //instnaciamos uma matriz vazia do tipo chesspiece
 		for(int i = 0; i < board.getRows(); i++) {
@@ -39,7 +54,8 @@ public class ChessMatch {
 		Position target = targetPosition.toPosition();	//faz a conversao para position
 		validateSourcePosition(source);
 		validateTargetPosition(source, target);
-		Piece capturedPiece = makeMove(source, target);
+		Piece capturedPiece = makeMove(source, target); //faz o movimento e captura a peça
+		nextTurn();
 		return (ChessPiece) capturedPiece;
 	}
 	
@@ -54,6 +70,9 @@ public class ChessMatch {
 		if(!board.thereIsAPiece(position)) {
 			throw new ChessException("There is no piece on source position");
 		}
+		if(currentPlayer != ((ChessPiece)board.piece(position)).getColor()) { //precisa do downcasting pra usar o getColor, pois é da classe ChessPiece
+			throw new ChessException("The chosen piece is not yours");
+		}
 		if(!board.piece(position).isThereAnyPossibleMove()) {  //se existe movimentos possiveis daquela peça no tabuleiro
 			throw new ChessException("There is no possible moves for the chosen piece");
 		}
@@ -63,6 +82,11 @@ public class ChessMatch {
 		if(!board.piece(source).possibleMove(target)) {//se na peça de origem, a posição de destino nao é um movimento possivel
 			throw new ChessException("The chosen piece can't move to target position");
 		}
+	}
+	
+	private void nextTurn() {
+		turn++;
+		currentPlayer = (currentPlayer == Color.WHITE) ? Color.BLACK : Color.WHITE;  //expressao ternaria condicional
 	}
 	
 	private void initialSetup() {   //inicia a partida e coloca as peças no tabuleiro

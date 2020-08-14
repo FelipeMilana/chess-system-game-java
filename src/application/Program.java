@@ -18,9 +18,9 @@ public class Program {
 		while(true) {
 			try {
 				UI.clearScreen();
-				UI.printBoard(chessMatch.getPieces());  //metodo estatico, e ira imprimir as peças de uma partida de xadrez
+				UI.printMatch(chessMatch);  //metodo estatico, e ira imprimir as peças de uma partida de xadrez
 				System.out.println();
-				System.out.print("Source ");
+				System.out.print("Source: ");
 				ChessPosition source = UI.readChessPosition(sc);
 				
 				boolean[][] possibleMoves = chessMatch.possibleMoves(source);  //aloca a matriz contendo os movimentos possiveis daquela posição na matriz possibleMoves
