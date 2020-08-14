@@ -1,7 +1,9 @@
 package chess;
 
-import boardgame.Board;
+import java.util.ArrayList;
+import java.util.List;
 
+import boardgame.Board;
 import boardgame.Piece;
 import boardgame.Position;
 import chess.pieces.King;
@@ -11,6 +13,8 @@ public class ChessMatch {
 
 	//attributes
 	private int turn;
+	private List<Piece> piecesOnTheBoard = new ArrayList<Piece>();  //duas listas vazias, pode ser iniciada no construtor
+	private List<Piece> capturedPieces = new ArrayList<Piece>();
 	
 	//association
 	private Board board;
@@ -60,9 +64,15 @@ public class ChessMatch {
 	}
 	
 	private Piece makeMove(Position source, Position target) {
-		Piece p = board.removePiece(source);
-		Piece capturedPiece = board.removePiece(target);
-		board.placePiece(p, target);
+		Piece p = board.removePiece(source); //tiro do tabuleiro a peça q eu quero mexer
+		Piece capturedPiece = board.removePiece(target); //tiro do tabuleiro uma possivel peça na posição de destino 
+		board.placePiece(p, target); //adiciona a peça que eu queria mexer para a posição de destino
+		
+		if(capturedPiece != null) {  //se houver captura de peça
+			piecesOnTheBoard.remove(capturedPiece);  //retira da lista de peças dispostas no tabuleiro
+			capturedPieces.add(capturedPiece); //adiciona essa peça retirada do tabuleiro, na lista de peças capturadas
+		}
+		
 		return capturedPiece;
 	}
 	
@@ -108,5 +118,7 @@ public class ChessMatch {
 	
 	private void placeNewPiece(char column, int row, ChessPiece piece) {
 		board.placePiece(piece, new ChessPosition(column, row).toPosition());
+		piecesOnTheBoard.add(piece); //coloca a peça na lista de peças dispostas no tabuleiro
+		
 	}
 }

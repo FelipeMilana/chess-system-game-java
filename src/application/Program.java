@@ -1,6 +1,8 @@
 package application;
 
+import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 import chess.ChessException;
@@ -14,11 +16,12 @@ public class Program {
 		
 		Scanner sc = new Scanner(System.in);
 		ChessMatch chessMatch = new ChessMatch();
+		List<ChessPiece> captured = new ArrayList<ChessPiece>(); //lista vazia de peças capturada
 		
 		while(true) {
 			try {
 				UI.clearScreen();
-				UI.printMatch(chessMatch);  //metodo estatico, e ira imprimir as peças de uma partida de xadrez
+				UI.printMatch(chessMatch, captured);  //metodo estatico, e ira imprimir as peças de uma partida de xadrez
 				System.out.println();
 				System.out.print("Source: ");
 				ChessPosition source = UI.readChessPosition(sc);
@@ -32,6 +35,10 @@ public class Program {
 				ChessPosition target = UI.readChessPosition(sc);
 				
 				ChessPiece capturedPiece = chessMatch.performChessMove(source, target);
+				
+				if(capturedPiece != null) {
+					captured.add(capturedPiece);  //adiciona a peça capturada na lista se ela nao for nula
+				}
 			}
 			catch(ChessException e) {    //para o programa não terminar, tratando as exceções, ira tratar boardException, mas n tem mensagem
 				System.out.println(e.getMessage());

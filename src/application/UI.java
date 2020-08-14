@@ -1,8 +1,10 @@
 package application;
 
+import java.util.Arrays;
 import java.util.InputMismatchException;
-
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 import chess.ChessMatch;
 import chess.ChessPiece;
@@ -51,8 +53,9 @@ public class UI {
 	}
 	
 	//imprimir a partida
-	public static void printMatch(ChessMatch chessMatch) {
-		printBoard(chessMatch.getPieces());
+	public static void printMatch(ChessMatch chessMatch, List<ChessPiece> captured) {
+		printBoard(chessMatch.getPieces()); //imprime o tabuleiro
+		printCapturedPieces(captured); //imprime a lista, inicialmento com a lista vazia
 		System.out.println();
 		System.out.println("Turn: " + chessMatch.getTurn());
 		System.out.println("Waiting player: " + chessMatch.getCurrentPlayer());
@@ -82,13 +85,14 @@ public class UI {
 		System.out.println(ANSI_RED + "  a b c d e f g h"+ ANSI_RESET);  //cor das letras	
 	}
 	
-	
+	//impressao de uma peça
 	private static void printPiece(ChessPiece piece, boolean background) {  //variavel para ver se precisa colorir ou nao o fundo da peça
 		if(background) {
 			System.out.print(ANSI_BLUE_BACKGROUND);
 		}
 		if (piece == null) {
-            System.out.print("-" + ANSI_RESET);
+            System.out.print(ANSI_PURPLE
+            		+"-" + ANSI_RESET);
         }
         else if (piece.getColor() == Color.WHITE) {
             System.out.print(ANSI_WHITE + piece.toString() + ANSI_RESET);
@@ -97,5 +101,24 @@ public class UI {
         	System.out.print(ANSI_YELLOW + piece.toString() + ANSI_RESET);
         }
         System.out.print(" ");
+	}
+	
+	//impressao da peça capturada
+	private static void printCapturedPieces(List<ChessPiece> captured) {
+		List<ChessPiece> white = captured.stream().filter(x -> x.getColor() == Color.WHITE).collect(Collectors.toList());
+		List<ChessPiece> black = captured.stream().filter(x -> x.getColor() == Color.BLACK).collect(Collectors.toList());
+		
+		System.out.println("Captured pieces: ");
+		System.out.print("White: ");
+		System.out.print(ANSI_WHITE); //cor branca
+		System.out.println(Arrays.toString(white.toArray()));  //imprimir a lista
+		/*or  for (ChessPiece p: white) {
+				System.out.print(p.toString() + " ");
+		} */
+		System.out.print(ANSI_RESET); //reseta a cor
+		System.out.print("Black: ");
+		System.out.print(ANSI_YELLOW);
+		System.out.println(Arrays.toString(black.toArray()));  //imprimir a lista
+		System.out.print(ANSI_RESET);
 	}
 }
