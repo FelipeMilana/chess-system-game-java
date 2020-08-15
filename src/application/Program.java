@@ -18,7 +18,7 @@ public class Program {
 		ChessMatch chessMatch = new ChessMatch();
 		List<ChessPiece> captured = new ArrayList<ChessPiece>(); //lista vazia de peças capturada
 		
-		while(true) {
+		while(!chessMatch.getCheckMate()) {  //enquanto nao tem o checkMate
 			try {
 				UI.clearScreen();
 				UI.printMatch(chessMatch, captured);  //metodo estatico, e ira imprimir as peças de uma partida de xadrez
@@ -50,5 +50,8 @@ public class Program {
 				System.out.println();   
 			}
 		}
+		
+		UI.clearScreen();
+		UI.printMatch(chessMatch, captured);  //mostra a partida finalizada
 	}
 }

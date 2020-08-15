@@ -58,10 +58,17 @@ public class UI {
 		printCapturedPieces(captured); //imprime a lista, inicialmento com a lista vazia
 		System.out.println();
 		System.out.println("Turn: " + chessMatch.getTurn());
-		System.out.println("Waiting player: " + chessMatch.getCurrentPlayer());
 		
-		if(chessMatch.getCheck()) {  //se retornar verdadeiro
-			System.out.println("CHECK!");
+		if(!chessMatch.getCheckMate()) {  //se nao tiver o checkMate, a partida continua
+			System.out.println("Waiting player: " + chessMatch.getCurrentPlayer());
+			
+			if(chessMatch.getCheck()) {  //se retornar verdadeiro
+				System.out.println("CHECK!");
+			}
+		}
+		else {  //senao mostra o campeao
+			System.out.println("CHECKMATE!");
+			System.out.println("WINNER: " + chessMatch.getCurrentPlayer());
 		}
 	}
 	
