@@ -2,6 +2,7 @@ package chess;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import boardgame.Board;
 import boardgame.Piece;
@@ -13,6 +14,7 @@ public class ChessMatch {
 
 	//attributes
 	private int turn;
+	private boolean check; //por padrão ja começa com falso
 	private List<Piece> piecesOnTheBoard = new ArrayList<Piece>();  //duas listas vazias, pode ser iniciada no construtor
 	private List<Piece> capturedPieces = new ArrayList<Piece>();
 	
@@ -37,6 +39,10 @@ public class ChessMatch {
 		return currentPlayer;
 	}
 	
+	public boolean getCheck() {
+		return check;
+	}
+	
 	public ChessPiece[][] getPieces() {  //o que interessa é a peça do tipo de xadrez, nao uma peça qualquer
 		ChessPiece[][] mat = new ChessPiece[board.getRows()][board.getColumns()];  //instnaciamos uma matriz vazia do tipo chesspiece
 		for(int i = 0; i < board.getRows(); i++) {
@@ -59,6 +65,14 @@ public class ChessMatch {
 		validateSourcePosition(source);
 		validateTargetPosition(source, target);
 		Piece capturedPiece = makeMove(source, target); //faz o movimento e captura a peça
+		
+		if(testCheck(currentPlayer)) {  //verifica se o jogador se auto colocou em check
+			undoMove(source, target, capturedPiece);
+			throw new ChessException("You can't put yourself in check");
+		}
+		
+		check = (testCheck(opponent(currentPlayer))) ? true : false;  //verifica se o oponente esta em check
+		
 		nextTurn();
 		return (ChessPiece) capturedPiece;
 	}
@@ -72,8 +86,18 @@ public class ChessMatch {
 			piecesOnTheBoard.remove(capturedPiece);  //retira da lista de peças dispostas no tabuleiro
 			capturedPieces.add(capturedPiece); //adiciona essa peça retirada do tabuleiro, na lista de peças capturadas
 		}
-		
 		return capturedPiece;
+	}
+	
+	private void undoMove(Position source, Position target, Piece capturedPiece) {
+		Piece p = board.removePiece(target);  //retira a peça do target
+		board.placePiece(p, source);  //e coloca no source, ou seja, volta ao normal
+		
+		if(capturedPiece != null) { //se foi pega uma peça
+			board.placePiece(capturedPiece, target);  //volta aquela peça na posição onde estava
+			capturedPieces.remove(capturedPiece);  //retira a peça da lista de peças capturadas
+			piecesOnTheBoard.add(capturedPiece); //poe a peça de novo na lista de peças dispostas no tabuleiro
+		}
 	}
 	
 	private void validateSourcePosition(Position position) {
@@ -97,6 +121,32 @@ public class ChessMatch {
 	private void nextTurn() {
 		turn++;
 		currentPlayer = (currentPlayer == Color.WHITE) ? Color.BLACK : Color.WHITE;  //expressao ternaria condicional
+	}
+	
+	private Color opponent(Color color) {  //vai devolver o oponente de uma cor
+		return (color == Color.WHITE) ? Color.BLACK : Color.WHITE;
+	}
+	
+	private ChessPiece king(Color color) {  
+		List<Piece> list = piecesOnTheBoard.stream().filter(x -> ((ChessPiece)x).getColor() == color).collect(Collectors.toList());  // filtra a lista de peças dispostas no tabuleiro, e adiciona na lista list, as peças que tenham a cor passada como argumento
+		for(Piece p: list) {
+			if(p instanceof King) {  //se a peça p for instanciada como rei, retorne essa peça p
+				return (ChessPiece)p;
+			}
+		}
+		throw new IllegalStateException("There is no" + color + "king on the board"); // essa exceção é para não ocorrer, dessa forma, não será tratada.
+	}
+	
+	private boolean testCheck(Color color) {
+		Position kingPosition = king(color).getChessPosition().toPosition(); //pega a posição do rei no formato de matriz
+		List<Piece> opponentPieces = piecesOnTheBoard.stream().filter(x -> ((ChessPiece)x).getColor() == opponent(color)).collect(Collectors.toList());  //cria uma lista com as peças no tabuleiro com a cor oponente do rei selecionado anteriormente
+		for(Piece p: opponentPieces) {
+			boolean[][] mat = p.possibleMoves();  //adiciona na matriz mat, a matriz de movimentos possiveis daquela peça
+			if(mat[kingPosition.getRow()][kingPosition.getColumn()]) {  //se na posição do rei, tiver alguma peça com movimento possivel, entra no if
+				return true; // retorna que o teste de check deu verdadeiro.
+			}
+		}
+		return false;
 	}
 	
 	private void initialSetup() {   //inicia a partida e coloca as peças no tabuleiro

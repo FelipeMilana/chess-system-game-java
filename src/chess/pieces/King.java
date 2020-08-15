@@ -72,7 +72,7 @@ public class King extends ChessPiece {
 		}
 		
 		//se(sudeste)
-		p.setValues(position.getRow() + 1, position.getRow() + 1);  //pega a linha e a coluna da peça rei
+		p.setValues(position.getRow() + 1, position.getColumn() + 1);  //pega a linha e a coluna da peça rei
 		if(getBoard().positionExists(p) && canMove(p)) {  //pode mover para essa posição
 			mat[p.getRow()][p.getColumn()] = true;
 		}
