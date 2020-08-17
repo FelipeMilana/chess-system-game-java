@@ -30,7 +30,7 @@ public class Bishop extends ChessPiece{
 		
 		while(getBoard().positionExists(p) && !getBoard().thereIsAPiece(p)) {  //enquanto existir a posição e nao tiver peça la
 			mat[p.getRow()][p.getColumn()] = true;
-			p.setValues(p.getRow() - 1, p.getColumn() - 1);
+			p.setValues(p.getRow() - 1, p.getColumn() - 1);  //para ir subindo os valores de linha e coluna
 		}
 		if(getBoard().positionExists(p) && isThereOpponentPiece(p)) {  //se tiver peça na posição p, e a peça for diferente de nulo, e com cor diferente da sua
 			mat[p.getRow()][p.getColumn()] = true;
@@ -52,7 +52,7 @@ public class Bishop extends ChessPiece{
 		
 		while(getBoard().positionExists(p) && !getBoard().thereIsAPiece(p)) {  //enquanto existir a posição e nao tiver peça la
 			mat[p.getRow()][p.getColumn()] = true;
-			p.setValues(p.getRow() + 1, p.getColumn() + 1);
+			p.setValues(p.getRow() + 1, p.getColumn() + 1);  //ir subindo os valores
 		}
 		if(getBoard().positionExists(p) && isThereOpponentPiece(p)) {  //se tiver peça na posição p, e a peça for diferente de nulo, e com cor diferente da sua
 			mat[p.getRow()][p.getColumn()] = true;
