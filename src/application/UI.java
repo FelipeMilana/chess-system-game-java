@@ -5,7 +5,6 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
-
 import chess.ChessMatch;
 import chess.ChessPiece;
 import chess.ChessPosition;
@@ -60,15 +59,27 @@ public class UI {
 		System.out.println("Turn: " + chessMatch.getTurn());
 		
 		if(!chessMatch.getCheckMate()) {  //se nao tiver o checkMate, a partida continua
-			System.out.println("Waiting player: " + chessMatch.getCurrentPlayer());
+			if(chessMatch.getCurrentPlayer() == Color.WHITE) {
+				System.out.println("Waiting player: " + ANSI_WHITE +chessMatch.getCurrentPlayer()+ ANSI_RESET);
+			}
+			else {
+				System.out.println("Waiting player: " + ANSI_YELLOW +chessMatch.getCurrentPlayer()+ ANSI_RESET);
+			}
 			
 			if(chessMatch.getCheck()) {  //se retornar verdadeiro
 				System.out.println("CHECK!");
 			}
 		}
+		
 		else {  //senao mostra o campeao
-			System.out.println("CHECKMATE!");
-			System.out.println("WINNER: " + chessMatch.getCurrentPlayer());
+			System.out.println(ANSI_RED + "CHECKMATE!"+ ANSI_RESET);
+			
+			if(chessMatch.getCurrentPlayer() == Color.WHITE) {
+				System.out.println("WINNER: " + ANSI_WHITE +chessMatch.getCurrentPlayer()+ ANSI_RESET);
+			}
+			else {
+				System.out.println("WINNER: " + ANSI_YELLOW +chessMatch.getCurrentPlayer()+ ANSI_RESET);
+			}
 		}
 	}
 	
@@ -119,15 +130,16 @@ public class UI {
 		List<ChessPiece> white = captured.stream().filter(x -> x.getColor() == Color.WHITE).collect(Collectors.toList());
 		List<ChessPiece> black = captured.stream().filter(x -> x.getColor() == Color.BLACK).collect(Collectors.toList());
 		
+		System.out.println();
 		System.out.println("Captured pieces: ");
-		System.out.print("White: ");
+		System.out.print(ANSI_WHITE +"White: "+ ANSI_RESET);
 		System.out.print(ANSI_WHITE); //cor branca
 		System.out.println(Arrays.toString(white.toArray()));  //imprimir a lista
 		/*or  for (ChessPiece p: white) {
 				System.out.print(p.toString() + " ");
 		} */
 		System.out.print(ANSI_RESET); //reseta a cor
-		System.out.print("Black: ");
+		System.out.print(ANSI_YELLOW +"Black: " + ANSI_RESET);
 		System.out.print(ANSI_YELLOW);
 		System.out.println(Arrays.toString(black.toArray()));  //imprimir a lista
 		System.out.print(ANSI_RESET);
