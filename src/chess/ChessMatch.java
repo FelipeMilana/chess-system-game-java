@@ -1,6 +1,7 @@
 package chess;
 
 import java.util.ArrayList;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -8,6 +9,7 @@ import boardgame.Board;
 import boardgame.Piece;
 import boardgame.Position;
 import chess.pieces.King;
+import chess.pieces.Pawn;
 import chess.pieces.Rook;
 
 public class ChessMatch {
@@ -89,7 +91,7 @@ public class ChessMatch {
 	
 	private Piece makeMove(Position source, Position target) {
 		ChessPiece p = (ChessPiece) board.removePiece(source); //tiro do tabuleiro a peça q eu quero mexer
-		p.increaseMoveCount();
+		p.increaseMoveCount(); //adicioan um movimento
 		Piece capturedPiece = board.removePiece(target); //tiro do tabuleiro uma possivel peça na posição de destino 
 		board.placePiece(p, target); //adiciona a peça que eu queria mexer para a posição de destino
 		
@@ -102,7 +104,7 @@ public class ChessMatch {
 	
 	private void undoMove(Position source, Position target, Piece capturedPiece) {
 		ChessPiece p = (ChessPiece) board.removePiece(target);  //retira a peça do target
-		p.decreaseMoveCount();
+		p.decreaseMoveCount(); //subtrai um movimento
 		board.placePiece(p, source);  //e coloca no source, ou seja, volta ao normal
 		
 		if(capturedPiece != null) { //se foi pega uma peça
@@ -193,26 +195,29 @@ public class ChessMatch {
 	}
 	
 	private void initialSetup() {   //inicia a partida e coloca as peças no tabuleiro
-		/*placeNewPiece('c', 1, new Rook(board, Color.WHITE));  //instancia uma peça, com o tabuleiro e cor, e sua posição
-		placeNewPiece('c', 2, new Rook(board, Color.WHITE));
-		placeNewPiece('d', 2, new Rook(board, Color.WHITE));	
-		placeNewPiece('e', 2, new Rook(board, Color.WHITE));
-		placeNewPiece('e', 1, new Rook(board, Color.WHITE));
-		placeNewPiece('d', 1, new King(board, Color.WHITE));
-		
-		placeNewPiece('c', 7, new Rook(board, Color.BLACK));
-		placeNewPiece('c', 8, new Rook(board, Color.BLACK));
-		placeNewPiece('d', 7, new Rook(board, Color.BLACK));
-		placeNewPiece('e', 7, new Rook(board, Color.BLACK));
-		placeNewPiece('e', 8, new Rook(board, Color.BLACK));
-		placeNewPiece('d', 8, new King(board, Color.BLACK));
-	*/
-		placeNewPiece('h', 7, new Rook(board, Color.WHITE));
-		placeNewPiece('d', 1, new Rook(board, Color.WHITE));
-		placeNewPiece('e', 1, new King(board, Color.WHITE));
-		
-		placeNewPiece('b', 8, new Rook(board, Color.BLACK));
-		placeNewPiece('a', 8, new King(board, Color.BLACK));
+		placeNewPiece('a', 1, new Rook(board, Color.WHITE));  //instancia uma peça, com o tabuleiro e cor, e sua posiçã
+        placeNewPiece('e', 1, new King(board, Color.WHITE));
+        placeNewPiece('h', 1, new Rook(board, Color.WHITE));
+        placeNewPiece('a', 2, new Pawn(board, Color.WHITE));
+        placeNewPiece('b', 2, new Pawn(board, Color.WHITE));
+        placeNewPiece('c', 2, new Pawn(board, Color.WHITE));
+        placeNewPiece('d', 2, new Pawn(board, Color.WHITE));
+        placeNewPiece('e', 2, new Pawn(board, Color.WHITE));
+        placeNewPiece('f', 2, new Pawn(board, Color.WHITE));
+        placeNewPiece('g', 2, new Pawn(board, Color.WHITE));
+        placeNewPiece('h', 2, new Pawn(board, Color.WHITE));
+
+        placeNewPiece('a', 8, new Rook(board, Color.BLACK));
+        placeNewPiece('e', 8, new King(board, Color.BLACK));
+        placeNewPiece('h', 8, new Rook(board, Color.BLACK));
+        placeNewPiece('a', 7, new Pawn(board, Color.BLACK));
+        placeNewPiece('b', 7, new Pawn(board, Color.BLACK));
+        placeNewPiece('c', 7, new Pawn(board, Color.BLACK));
+        placeNewPiece('d', 7, new Pawn(board, Color.BLACK));
+        placeNewPiece('e', 7, new Pawn(board, Color.BLACK));
+        placeNewPiece('f', 7, new Pawn(board, Color.BLACK));
+        placeNewPiece('g', 7, new Pawn(board, Color.BLACK));
+        placeNewPiece('h', 7, new Pawn(board, Color.BLACK));
 	}
 	
 	private void placeNewPiece(char column, int row, ChessPiece piece) {
