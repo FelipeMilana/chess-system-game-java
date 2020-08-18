@@ -40,7 +40,7 @@ public class Program {
 					captured.add(capturedPiece);  //adiciona a peça capturada na lista se ela nao for nula
 				}
 				
-				if(chessMatch.getPromoted() != null) {
+				if(chessMatch.getPromoted() != null) {  //foi feito a troca pela rainha, ai depois trocamos a nossa escolha
 					System.out.print("Enter piece for promotion(B/N/R/Q): ");
 					String type = sc.nextLine();
 					chessMatch.replacePromotedPiece(type);  //adiciona a peça no lugar
