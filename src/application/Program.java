@@ -42,7 +42,12 @@ public class Program {
 				
 				if(chessMatch.getPromoted() != null) {  //foi feito a troca pela rainha, ai depois trocamos a nossa escolha
 					System.out.print("Enter piece for promotion(B/N/R/Q): ");
-					String type = sc.nextLine();
+					String type = sc.nextLine().toUpperCase();  //converte para maiusculo
+					while(!type.equals("B") && !type.equals("N") && !type.equals("R") && !type.equals("Q")) {  //garante q o usuario digita uma letra correta
+						System.out.println("Invalid value");
+						System.out.print("Enter piece for promotion(B/N/R/Q): ");
+						type = sc.nextLine().toUpperCase();  //converte para maiusculo
+					}
 					chessMatch.replacePromotedPiece(type);  //adiciona a peça no lugar
 				}
 			}
