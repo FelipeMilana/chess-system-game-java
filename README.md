@@ -31,7 +31,7 @@ Para executarmos a aplicação, utilizamos o terminal do Git bash, pois ele é u
   <img width="796" height="851" src=https://github.com/FelipeMilana/Assets/blob/main/chess-system-design.png>
 </p>
 
-## Conceitos de POO Utilizados
+## Conceitos de POO utilizados
 - Encapsulamento
 - Construtores
 - Sobrecarga
@@ -70,5 +70,4 @@ java application/Program
 
 Felipe Milana
 
-[![NPM](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/felipemilana)  [![NPM](https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:felipe.milana97@gmail.com)
-
+[![NPM](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/felipemilana) 
